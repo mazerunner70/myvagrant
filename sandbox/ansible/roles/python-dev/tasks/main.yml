@@ -1,0 +1,50 @@
+---
+# install items for python 3
+
+- name: requires setuptools for python 3
+  become: true
+  apt:
+    name:
+      - python3-setuptools
+    state: latest
+    install_recommends: no
+
+# Install python 3.6
+- name: install python-dev
+  become: true
+  apt:
+    name:
+      - python-software-properties
+    state: latest
+    install_recommends: yes
+
+- name: add python repo
+  become: true
+  apt_repository:
+    repo: ppa:jonathonf/python-3.6
+    state: present
+
+- name: another apt update
+  become: true
+  apt:
+    update_cache: yes
+
+- name: install python 3.6
+  become: true
+  apt:
+    name:
+      - python3.6
+      - python3.6-dev
+      - python3.6-venv
+    state: latest
+    install_recommends: yes
+
+- name: install pip3.6
+  become: true
+  shell: "curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3.6"
+
+- name: install pycharm community via snap
+  become: true
+  command: snap install pycharm-community --classic
+
+

@@ -1,0 +1,4 @@
+---
+- hosts: dev_env
+  roles:
+    - common-dev 
