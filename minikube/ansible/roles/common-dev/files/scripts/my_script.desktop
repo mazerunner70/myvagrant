@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=StartUp Script
+Exec=~/bin/startup_config.sh
+Icon=system-run
+X-GNOME-Autostart-enabled=true
+
