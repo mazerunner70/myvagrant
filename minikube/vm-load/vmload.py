@@ -76,8 +76,12 @@ def check_iso_is_present(path):
 def modifyvm(name, commandarray):
     return os_call(['VBoxManage', 'modifyvm', name]+commandarray)
 
+def unattended_install(name, commandarray):
+    return os_call(['VBoxManage', 'unattended', 'install', name]+commandarray)
+
 
 if __name__ == '__main__':
+    print ("Placing Sandbox definition in virtualbox\n")
     config = configparser.ConfigParser()
     settings = config.read('example.ini')
     boxname = config['VM_base']['name']
@@ -105,3 +109,12 @@ if __name__ == '__main__':
     modifyvm(boxname, ['--ioapic', 'on'])
     modifyvm(boxname, ['--memory', '6100', '--vram', '128'])
     modifyvm(boxname, ['--boot1', 'dvd', '--boot2', 'disk', '--boot3', 'none', '--boot4', 'none'])
+
+    print("Setup successful, now starting vm install using virtualbox\n")
+
+    #first a hack workaround
+ #   os_call(['rm', '/usr/share/virtualbox/UnattendedTemplates'])
+  #  os_call(['ln', '-s', '/usr/lib/virtualbox/UnattendedTemplates/', 'UnattendedTemplates'])
+
+
+    unattended_install(boxname, ['--iso', isopath, '--user', 'william', '--password', 'stdiN', '--country', 'GB', '--time-zone', 'UTC', '--start-vm', 'gui'])
